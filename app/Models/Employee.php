@@ -27,4 +27,8 @@ class Employee extends Model
     use HasFactory;
 
     protected $fillable = ['name', 'email', 'phone', 'position'];
+
+    public function projects(){
+        return $this->hasmany(Project::class);
+    }
 }
