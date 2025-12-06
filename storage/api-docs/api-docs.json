@@ -97,7 +97,7 @@
                 "tags": [
                     "Employees"
                 ],
-                "summary": "Get an employee by ID",
+                "summary": "Get an employee by ID and show employee projects",
                 "operationId": "d53e117f7e819b6f063fc96ea910eb75",
                 "parameters": [
                     {
@@ -225,6 +225,263 @@
                     }
                 }
             }
+        },
+        "/api/projects/{id}": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get a single project with full employee info",
+                "operationId": "af32aed47c19d517816e0b970d60cd5a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Project ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProjectWithEmployee"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Project not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Update an existing project",
+                "operationId": "491d11cc6efd20335421a859159e2487",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Project ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "employee_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Updated Mobile App"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "New features"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Project updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Project"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "$ref": "#/components/responses/422"
+                    },
+                    "404": {
+                        "description": "Project not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Project not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Delete a project",
+                "operationId": "187865e30ff6b72f1cea3037d9dd84fa",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Project ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Project deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Project deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Project not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Project not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/projects": {
+            "get": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Get all projects",
+                "operationId": "8d4a13ef3fc773ff4031e515460919ea",
+                "responses": {
+                    "200": {
+                        "description": "List of projects",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Project"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Projects"
+                ],
+                "summary": "Create a new project",
+                "operationId": "a4dd4c17bf5fc24c224357f03dcc848a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "employee_id",
+                                    "title"
+                                ],
+                                "properties": {
+                                    "employee_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Mobile App"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "App features"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Project created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Project"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/responses/422"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
         }
     },
     "components": {
@@ -257,6 +514,12 @@
                         "type": "string",
                         "example": "Developer"
                     },
+                    "projects": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Project"
+                        }
+                    },
                     "created_at": {
                         "type": "string",
                         "format": "date-time"
@@ -264,6 +527,66 @@
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "Project": {
+                "title": "Project",
+                "required": [
+                    "employee_id",
+                    "title"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "employee_id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Mobile App Update"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Add new features"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ProjectWithEmployee": {
+                "title": "Project with Employee Info",
+                "required": [
+                    "id",
+                    "title",
+                    "employee"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Mobile App Update"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "Add new features"
+                    },
+                    "employee": {
+                        "$ref": "#/components/schemas/Employee"
                     }
                 },
                 "type": "object"
@@ -303,6 +626,10 @@
         {
             "name": "Employees",
             "description": "Employees"
+        },
+        {
+            "name": "Projects",
+            "description": "Projects"
         }
     ]
 }

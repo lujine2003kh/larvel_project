@@ -14,7 +14,7 @@ Route::get('/projects', [ProjectController::class, 'index']);
 Route::post('/projects', [ProjectController::class, 'store']);
 Route::put('/projects/{id}', [ProjectController::class, 'update']);
 Route::delete('/projects/{id}', [ProjectController::class, 'destroy']);
-Route::get('/projects/{id}', [EmployeeController::class, 'show']);
+Route::get('/projects/{id}', [ProjectController::class, 'show']);
 
 
 

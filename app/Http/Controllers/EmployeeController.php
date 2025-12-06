@@ -90,7 +90,7 @@ class EmployeeController extends Controller
     /**
      * @OA\Get(
      *     path="/api/employees/{id}",
-     *     summary="Get an employee by ID",
+     *     summary="Get an employee by ID and show employee projects",
      *     tags={"Employees"},
      *     @OA\Parameter(
      *         name="id",
@@ -112,7 +112,7 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        $employee = Employee::findOrFail($id);
+        $employee = Employee::with('projects')->findOrFail($id);
         return response()->json($employee);
     }
 
